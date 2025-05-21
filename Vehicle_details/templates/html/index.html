@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vehicle Info</title>
+</head>
+<body>
+    <h1>Check Vehicle Information</h1>
+    <form id="vehicle-form">
+        <input type="text" id="vehicle_no" placeholder="Enter Vehicle Number" required />
+        <button type="submit">Get Info</button>
+      </form>
+      
+      <pre id="result"></pre>
+      
+      <script>
+        document.getElementById('vehicle-form').addEventListener('submit', async (e) => {
+          e.preventDefault();
+          const vehicle_no = document.getElementById('vehicle_no').value.trim();
+      
+          const response = await fetch('/get_vehicle_info/', {  // This URL must match urls.py
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ vehicle_no })
+          });
+      
+          const data = await response.json();
+          document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+        });
+      </script>
+      
+</body>
+</html>
